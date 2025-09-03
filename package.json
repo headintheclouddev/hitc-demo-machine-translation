@@ -1,0 +1,12 @@
+{
+  "name": "hitc-demo-machine-translation",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@hitc/netsuite-types": "^2025.2.0"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/headintheclouddev/hitc-demo-machine-translation"
+  }
+}
