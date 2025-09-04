@@ -2,7 +2,7 @@
   "name": "hitc-demo-machine-translation",
   "version": "1.0.0",
   "devDependencies": {
-    "@hitc/netsuite-types": "^2025.2.0"
+    "@hitc/netsuite-types": "^2025.2.1"
   },
   "private": true,
   "repository": {
