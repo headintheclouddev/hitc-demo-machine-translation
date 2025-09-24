@@ -25,7 +25,7 @@ export function beforeSubmit(context: EntryPoints.UserEvent.beforeSubmitContext)
       if (translationResult.id == `${timestamp}-subject`)
         context.newRecord.setValue({ fieldId: 'title', value: translationResult.text });
       else if (translationResult.id == `${timestamp}-details`)
-        context.newRecord.setValue({ fieldId: 'incomingmessage', value: translationResult.text });
+        context.newRecord.setValue({ fieldId: 'custevent_incoming_message_translated', value: translationResult.text });
     }
   } else if (context.type == context.UserEventType.EDIT) {
     const replyText = context.newRecord.getValue({ fieldId: 'outgoingmessage' }) as string;
