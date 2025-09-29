@@ -30,7 +30,7 @@ export function beforeSubmit(context: EntryPoints.UserEvent.beforeSubmitContext)
   } else if (context.type == context.UserEventType.EDIT) {
     const replyText = context.newRecord.getValue({ fieldId: 'outgoingmessage' }) as string;
     const preferredLanguage = context.newRecord.getText({ fieldId: 'custevent_preferred_language' }) as string;
-    if (replyText && preferredLanguage != 'English (US)') { // 1 is English and does not need translation (unless your support reps use different languages)
+    if (replyText && preferredLanguage && preferredLanguage != 'English (US)') { // English does not need translation (unless your support reps use different languages)
       const caseNumber = context.newRecord.getValue({ fieldId: 'casenumber' }) as string;
       log.debug('beforeSubmit', `Translating reply on case ${caseNumber} to ${preferredLanguage}: ${replyText}`);
       const translations = machineTranslation.translate({
@@ -39,12 +39,16 @@ export function beforeSubmit(context: EntryPoints.UserEvent.beforeSubmitContext)
       });
       log.debug('beforeSubmit', `Translation results for case ${caseNumber}: ${JSON.stringify(translations)}`);
       if (translations.results.length > 0 && translations.errors.length == 0)
-        context.newRecord.setValue({ fieldId: 'outgoingmessage', value: translations.results[0].text });
+        context.newRecord.setValue({
+          fieldId: 'outgoingmessage',
+          value: translations.results[0].text + '<p>--------------------------------------<br />Original Text:</p>' + replyText
+        });
     }
   }
 }
 
-const LANGUAGE_MAPPING = { // TODO: Talk about the source of this
+const LANGUAGE_MAPPING = {
+  'Arabic':          machineTranslation.Language.ARABIC,
   'English (US)':    machineTranslation.Language.ENGLISH,
   'French (France)': machineTranslation.Language.FRENCH,
   'German':          machineTranslation.Language.GERMAN,
